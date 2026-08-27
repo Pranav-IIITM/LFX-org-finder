@@ -5,33 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LFX Mentorship Finder</title>
     <link rel="stylesheet" href="src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>🚀 LFX Org Finder</h1>
-            <p>Find your perfect Linux Foundation Mentorship project — filtered by term, category, and tech stack.</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🐧</span> 
+                <strong>LFX Mentorship</strong> <em>Finder</em>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#projects-section">Projects</a>
+                <a href="https://github.com/Pranav-IIITM/LFX-org-finder" target="_blank" class="nav-btn">⭐ Star & Contribute</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="container">
-        <div class="controls">
-            <input type="text" id="search-input" placeholder="Search projects, orgs, or skills...">
-            <select id="term-filter">
-                <option value="all">All Terms</option>
-                <option value="2026-Term-1" selected>2026 Term 1</option>
-                <option value="2025-Term-3">2025 Term 3</option>
-            </select>
-        </div>
+    <div class="container">
+        <header class="hero">
+            <div class="hero-content">
+                <div class="badge">✔️ LINUX FOUNDATION MENTORSHIP 2026</div>
+                <h1>Find Your <br><span class="highlight">Perfect LFX Project</span></h1>
+                <p>Browse open source organizations. Filter by language, domain, and live GitHub activity. Land your next mentorship.</p>
+                
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Search organization names, skills...">
+                    <button class="search-btn">Search</button>
+                </div>
 
-        <div id="stats-container" class="stats">
-            <!-- Dynamic stats like "Showing X projects" -->
-        </div>
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <span class="stat-title">Total Projects</span>
+                        <span class="stat-value" id="total-projects-count">10+</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-title">Languages</span>
+                        <span class="stat-value">15+</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-title">Domains</span>
+                        <span class="stat-value">8+</span>
+                    </div>
+                </div>
+            </div>
 
-        <div id="projects-grid" class="grid">
-            <!-- Project cards will be injected here by JS -->
-        </div>
-    </main>
+            <div class="hero-visual">
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <h3>2026 Term 3 Timeline</h3>
+                        <span class="status-badge">LIVE</span>
+                    </div>
+                    <div class="timeline-track">
+                        <div class="timeline-item past">
+                            <div class="date">AUG 3, 2026</div>
+                            <div class="event">Applications Open</div>
+                        </div>
+                        <div class="timeline-item past">
+                            <div class="date">AUG 18, 2026</div>
+                            <div class="event">Applications Close</div>
+                        </div>
+                        <div class="timeline-item active">
+                            <div class="date">SEP 2, 2026</div>
+                            <div class="event">Selection Notifications</div>
+                        </div>
+                        <div class="timeline-item future">
+                            <div class="date">SEP 7, 2026</div>
+                            <div class="event">Mentorship Begins</div>
+                        </div>
+                        <div class="timeline-item future">
+                            <div class="date">NOV 27, 2026</div>
+                            <div class="event">Last Day of Term</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main id="projects-section">
+            <div class="controls">
+                <select id="term-filter">
+                    <option value="all">All Terms</option>
+                    <option value="2026-Term-3" selected>2026 Term 3 (Current)</option>
+                    <option value="2026-Term-1">2026 Term 1 (Past)</option>
+                </select>
+                <div id="stats-container" class="stats">
+                    <!-- Dynamic stats like "Showing X projects" -->
+                </div>
+            </div>
+
+            <div id="projects-grid" class="grid">
+                <!-- Project cards will be injected here by JS -->
+            </div>
+        </main>
+    </div>
 
     <div id="modal" class="modal hidden">
         <div class="modal-content">
