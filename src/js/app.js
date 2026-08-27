@@ -126,6 +126,35 @@ document.addEventListener('DOMContentLoaded', () => {
     function openModal(project) {
         const projectIdeasUrl = `org-projects.html?org=${encodeURIComponent(project.org)}&term=${encodeURIComponent(project.term)}`;
         
+        const orgAllProjects = LFX_PROJECTS.filter(p => p.org === project.org);
+        const participatedTerms = new Set(orgAllProjects.map(p => p.term));
+        const yearsToShow = [2024, 2025, 2026];
+        
+        let timelineHTML = '';
+        yearsToShow.forEach(y => {
+            const termsInYear = [`${y}-Term-1`, `${y}-Term-2`, `${y}-Term-3`];
+            const participatedInYear = termsInYear.some(t => participatedTerms.has(t));
+            
+            if (!participatedInYear) {
+                // Did not participate this year at all
+                timelineHTML += `<span style="background: #f3f4f6; border: 1px solid #e5e7eb; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: #d1d5db; cursor: not-allowed; display: inline-block; margin-right: 8px; margin-bottom: 8px;">${y}</span>`;
+            } else {
+                // Participated in at least one term. Create a segmented group.
+                let yearHTML = `<div style="display: inline-flex; align-items: center; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 2px; margin-right: 8px; margin-bottom: 8px;">
+                                    <span style="font-size: 0.75rem; font-weight: 800; color: #6b7280; margin: 0 8px;">${y}</span>`;
+                termsInYear.forEach((t, index) => {
+                    const termLabel = 'T' + (index + 1);
+                    if (participatedTerms.has(t)) {
+                        yearHTML += `<a href="org-projects.html?org=${encodeURIComponent(project.org)}&term=${encodeURIComponent(t)}" target="_blank" style="text-decoration: none; background: var(--accent-dark); padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; color: #fff; margin: 2px;">${termLabel}</a>`;
+                    } else {
+                        yearHTML += `<span style="background: transparent; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; color: #d1d5db; cursor: not-allowed; margin: 2px;">${termLabel}</span>`;
+                    }
+                });
+                yearHTML += `</div>`;
+                timelineHTML += yearHTML;
+            }
+        });
+
         modalBody.innerHTML = `
             <div style="margin-bottom: 12px;">
                 <span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; font-weight: 800; font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.05em;">${project.category.toUpperCase()}</span>
@@ -138,22 +167,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 💡 Visit Project Ideas Page
             </a>
 
-            <div style="display: flex; gap: 12px; margin-bottom: 35px; overflow-x: auto; padding-bottom: 5px;">
-                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 16px 12px; text-align: center; flex: 1; min-width: 90px;">
-                    <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">${project.yearsIn}</div>
-                    <div style="font-size: 0.65rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">Years In</div>
+            <div style="display: flex; gap: 8px; margin-bottom: 35px; flex-wrap: wrap;">
+                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 12px 8px; text-align: center; flex: 1; min-width: 65px;">
+                    <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); word-break: break-word;">${project.yearsIn}</div>
+                    <div style="font-size: 0.6rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">Years In</div>
                 </div>
-                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 16px 12px; text-align: center; flex: 1; min-width: 90px;">
-                    <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">${project.firstYear}</div>
-                    <div style="font-size: 0.65rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">First Year</div>
+                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 12px 8px; text-align: center; flex: 1; min-width: 65px;">
+                    <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); word-break: break-word;">${project.firstYear}</div>
+                    <div style="font-size: 0.6rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">First Year</div>
                 </div>
-                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 16px 12px; text-align: center; flex: 1; min-width: 90px;">
-                    <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">${project.competition}</div>
-                    <div style="font-size: 0.65rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">Competition</div>
+                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 12px 8px; text-align: center; flex: 1; min-width: 65px;">
+                    <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); word-break: break-word;">${project.competition}</div>
+                    <div style="font-size: 0.6rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">Competition</div>
                 </div>
-                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 16px 12px; text-align: center; flex: 1; min-width: 90px;">
-                    <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">${project.codebase}</div>
-                    <div style="font-size: 0.65rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">Codebase</div>
+                <div style="border: 1.5px solid #d97706; border-radius: 16px; padding: 12px 8px; text-align: center; flex: 1; min-width: 65px;">
+                    <div style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary); word-break: break-word;">${project.codebase}</div>
+                    <div style="font-size: 0.6rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">Codebase</div>
                 </div>
             </div>
 
@@ -184,12 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="margin-bottom: 30px;">
                 <h4 style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800; margin-bottom: 12px;">Participation Timeline</h4>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <span style="background: #e5e7eb; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: #4b5563; cursor: pointer;">2024</span>
-                    <span style="background: #e5e7eb; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: #4b5563; cursor: pointer;">2025</span>
-                    <span style="background: #e5e7eb; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: #4b5563; cursor: pointer;">2026 T1</span>
-                    <span style="background: var(--accent-dark); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: #fff; cursor: pointer;">2026 T3</span>
+                    ${timelineHTML}
                 </div>
-                <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px;">* Click a year to explore its historical projects</p>
+                <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px;">* Click an active term to explore its projects</p>
             </div>
 
             <div style="margin-bottom: 35px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 24px;">
