@@ -5,71 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Organization Projects - LFX Mentorship Finder</title>
     <link rel="stylesheet" href="src/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        .project-card {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-        .project-card h3 {
-            font-size: 1.5rem;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-        .project-card p {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-        .btn-lfx {
-            background: #d97706;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 700;
-            display: inline-block;
-        }
-        .btn-lfx:hover {
-            background: #b45309;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <span style="font-size: 1.25rem;">🐧</span> LFX Mentorship <i>Finder</i>
+            <div class="nav-logo">
+                <span class="logo-icon">🐧</span>
+                <strong>LFX Mentorship</strong> <em>Finder</em>
             </div>
             <div class="nav-links">
-                <a href="index.html">Back to Organizations</a>
+                <a href="index.html">← Back to Organizations</a>
             </div>
         </div>
     </nav>
 
-    <header class="hero" style="padding-bottom: 40px; padding-top: 120px;">
-        <div class="container" style="text-align: center;">
+    <header class="org-hero">
+        <div class="container">
             <div style="margin-bottom: 16px;">
-                <span id="term-badge" style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; font-weight: 800; font-size: 0.8rem; padding: 6px 14px; border-radius: 20px; letter-spacing: 0.05em;">LFX Term</span>
+                <span id="term-badge" class="badge">LFX Term</span>
             </div>
-            <h1 id="org-title" style="font-size: 3.5rem; margin-bottom: 16px;">Loading...</h1>
-            <p id="org-subtitle" style="font-size: 1.25rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Project Ideas list</p>
+            <h1 id="org-title">Loading...</h1>
+            <p id="org-subtitle">Project Ideas list</p>
         </div>
     </header>
 
     <section class="page-section" style="padding-top: 0;">
-        <div class="container" style="max-width: 800px;">
+        <div class="container projects-container">
             <div id="projects-list">
                 <!-- Projects injected here -->
             </div>
         </div>
     </section>
 
-    <!-- Data -->
     <script src="src/js/data.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -83,14 +51,14 @@
             const projectsList = document.getElementById('projects-list');
 
             if (!orgName) {
-                projectsList.innerHTML = '<p>No organization specified in URL.</p>';
+                projectsList.innerHTML = '<div class="empty-state"><p>No organization specified in URL.</p></div>';
                 return;
             }
 
             const orgProjects = LFX_PROJECTS.filter(p => p.org === orgName && (!term || p.term === term));
 
             if (orgProjects.length === 0) {
-                projectsList.innerHTML = '<p>No projects found for this organization in the selected term.</p>';
+                projectsList.innerHTML = '<div class="empty-state"><p>No projects found for this organization in the selected term.</p></div>';
                 return;
             }
 
@@ -100,17 +68,17 @@
                 
                 card.innerHTML = `
                     <h3>${project.title}</h3>
-                    <div style="margin-bottom: 20px;">
-                        <span style="font-size: 0.85rem; font-weight: 700; color: #6b7280; text-transform: uppercase;">Mentors:</span>
-                        ${project.mentors.map(m => `<a href="https://github.com/${m.github}" target="_blank" style="text-decoration: none; font-weight: 700; color: #d97706; margin-left: 6px;">@${m.github}</a>`).join(', ')}
+                    <div class="project-mentors">
+                        <span class="project-mentors-label">Mentors:</span>
+                        ${project.mentors.map(m => `<a href="https://github.com/${m.github}" target="_blank" class="project-mentor-link">@${m.github}</a>`).join(', ')}
                     </div>
                     <div class="tags" style="margin-bottom: 20px; padding: 0;">
-                        ${project.skills.map(skill => `<span class="tag" style="background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb;">${skill}</span>`).join('')}
+                        ${project.skills.map(skill => `<span class="tag">${skill}</span>`).join('')}
                     </div>
                     <p>${project.description}</p>
-                    <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; gap: 12px;">
+                    <div class="project-actions">
                         <a href="${project.issueUrl}" target="_blank" class="btn-lfx">View Upstream Issue</a>
-                        <a href="${project.lfxUrl}" target="_blank" class="btn-lfx" style="background: #fff; color: #374151; border: 1px solid #d1d5db;">View on LFX Portal</a>
+                        <a href="${project.lfxUrl}" target="_blank" class="btn-lfx btn-outline">View on LFX Portal</a>
                     </div>
                 `;
                 projectsList.appendChild(card);
