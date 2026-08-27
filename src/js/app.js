@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('projects-grid');
     const searchInput = document.getElementById('search-input');
     const termFilter = document.getElementById('term-filter');
+    const yearFilter = document.getElementById('year-filter');
     const statsContainer = document.getElementById('stats-container');
     
     const modal = document.getElementById('modal');
@@ -18,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'card';
             
-            // Limit skills shown on card to 3 to keep it clean
             const displaySkills = project.skills.slice(0, 3);
             const extraSkills = project.skills.length > 3 ? project.skills.length - 3 : 0;
 
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 
                 <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8em;">
-                    ${project.title}
+                    Offering ${project.projectCount} mentorship project${project.projectCount > 1 ? 's' : ''} in ${project.term.replace('-', ' ')}.
                 </p>
                 
                 <div class="tags" style="margin-bottom: 20px; padding-top: 0; min-height: 28px;">
@@ -49,16 +49,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function filterProjects() {
         const query = searchInput.value.toLowerCase();
-        const term = termFilter.value;
+        const year = yearFilter ? yearFilter.value : 'all';
+        const term = termFilter ? termFilter.value : 'all';
 
-        currentData = LFX_PROJECTS.filter(p => {
-            const matchesTerm = term === 'all' || p.term === term;
+        const filtered = LFX_PROJECTS.filter(p => {
+            const matchesYear = year === 'all' || p.term.startsWith(year);
+            const matchesTerm = term === 'all' || p.term.endsWith(term);
             const matchesSearch = p.title.toLowerCase().includes(query) || 
                                   p.org.toLowerCase().includes(query) || 
                                   p.skills.some(s => s.toLowerCase().includes(query));
             
-            return matchesTerm && matchesSearch;
+            return matchesYear && matchesTerm && matchesSearch;
         });
+
+        // Group by Organization
+        const orgMap = new Map();
+        filtered.forEach(p => {
+            if (!orgMap.has(p.org)) {
+                orgMap.set(p.org, {
+                    id: p.id,
+                    org: p.org,
+                    term: p.term,
+                    category: p.category,
+                    skills: new Set(p.skills),
+                    mentors: new Map(p.mentors.map(m => [m.github, m])),
+                    repo: p.repo,
+                    description: p.description,
+                    yearsIn: p.yearsIn,
+                    firstYear: p.firstYear,
+                    competition: p.competition,
+                    codebase: p.codebase,
+                    projectCount: 1,
+                    projects: [p]
+                });
+            } else {
+                const existing = orgMap.get(p.org);
+                existing.projectCount++;
+                p.skills.forEach(s => existing.skills.add(s));
+                p.mentors.forEach(m => existing.mentors.set(m.github, m));
+                existing.projects.push(p);
+            }
+        });
+
+        currentData = Array.from(orgMap.values()).map(o => ({
+            ...o,
+            skills: Array.from(o.skills),
+            mentors: Array.from(o.mentors.values())
+        }));
 
         renderCards(currentData);
     }
@@ -87,15 +124,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function openModal(project) {
+        const projectIdeasUrl = `org-projects.html?org=${encodeURIComponent(project.org)}&term=${encodeURIComponent(project.term)}`;
+        
         modalBody.innerHTML = `
             <div style="margin-bottom: 12px;">
                 <span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; font-weight: 800; font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.05em;">${project.category.toUpperCase()}</span>
             </div>
             
-            <h2 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 4px; color: var(--text-primary); letter-spacing: -0.02em;">${project.org}</h2>
+            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 4px; color: var(--text-primary); letter-spacing: -0.02em;">${project.org}</h2>
             <p style="color: var(--text-secondary); font-weight: 500; font-size: 1rem; margin-bottom: 20px;">LFX Partner</p>
             
-            <a href="${project.issueUrl}" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid #d97706; color: #b45309; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-bottom: 35px; transition: all 0.2s; text-decoration: none;">
+            <a href="${projectIdeasUrl}" style="display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid #d97706; color: #b45309; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-bottom: 35px; transition: all 0.2s; text-decoration: none;">
                 💡 Visit Project Ideas Page
             </a>
 
@@ -170,8 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <div class="actions" style="border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
-                <a href="${project.lfxUrl}" target="_blank" class="btn primary" style="background: #c2410c; border-color: #c2410c; flex: 1; text-align: center;">Apply on LFX</a>
-                <a href="${project.issueUrl}" target="_blank" class="btn primary" style="background: #b45309; border-color: #b45309; flex: 1; text-align: center;">Project Ideas</a>
+                <a href="${projectIdeasUrl}" class="btn primary" style="background: #b45309; border-color: #b45309; flex: 1; text-align: center;">Project Ideas (${project.projectCount})</a>
                 <a href="https://github.com/${project.repo}" target="_blank" class="btn" style="background: #fff; color: var(--text-primary); border: 1px solid #d1d5db; flex: 1; text-align: center;">&lt;&gt; Repository</a>
             </div>
         `;
@@ -189,7 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     searchInput.addEventListener('input', filterProjects);
-    termFilter.addEventListener('change', filterProjects);
+    if(termFilter) termFilter.addEventListener('change', filterProjects);
+    if(yearFilter) yearFilter.addEventListener('change', filterProjects);
 
     // Initial render
     filterProjects();
