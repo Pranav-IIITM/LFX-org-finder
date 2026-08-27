@@ -5,34 +5,219 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LFX Mentorship Finder</title>
     <link rel="stylesheet" href="src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>🚀 LFX Org Finder</h1>
-            <p>Find your perfect Linux Foundation Mentorship project — filtered by term, category, and tech stack.</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🐧</span> 
+                <strong>LFX Mentorship</strong> <em>Finder</em>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#projects-section">Projects</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#mentors">Mentors</a>
+                <a href="#guide">Guide</a>
+                <a href="https://github.com/Pranav-IIITM/LFX-org-finder" target="_blank" class="nav-btn">⭐ Star & Contribute</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="container">
-        <div class="controls">
-            <input type="text" id="search-input" placeholder="Search projects, orgs, or skills...">
-            <select id="term-filter">
-                <option value="all">All Terms</option>
-                <option value="2026-Term-1" selected>2026 Term 1</option>
-                <option value="2025-Term-3">2025 Term 3</option>
-            </select>
-        </div>
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-content">
+                <div class="badge">✔️ LINUX FOUNDATION MENTORSHIP 2026</div>
+                <h1>Find Your <br><span class="highlight">Perfect LFX Project</span></h1>
+                <p>Browse open source organizations. Filter by language, domain, and live GitHub activity. Land your next mentorship.</p>
+                
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Search organization names, skills...">
+                    <button class="search-btn">Search</button>
+                </div>
 
-        <div id="stats-container" class="stats">
-            <!-- Dynamic stats like "Showing X projects" -->
-        </div>
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <span class="stat-title">Total Projects</span>
+                        <span class="stat-value" id="total-projects-count">10+</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-title">Languages</span>
+                        <span class="stat-value">15+</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-title">Domains</span>
+                        <span class="stat-value">8+</span>
+                    </div>
+                </div>
+            </div>
 
-        <div id="projects-grid" class="grid">
-            <!-- Project cards will be injected here by JS -->
-        </div>
+            <div class="hero-visual">
+                <div class="timeline-card">
+                    <div class="timeline-header">
+                        <h3>2026 Term 3 Timeline</h3>
+                        <span class="status-badge">LIVE</span>
+                    </div>
+                    <div class="timeline-track">
+                        <div class="timeline-item past">
+                            <div class="date">AUG 3, 2026</div>
+                            <div class="event">Applications Open</div>
+                        </div>
+                        <div class="timeline-item past">
+                            <div class="date">AUG 18, 2026</div>
+                            <div class="event">Applications Close</div>
+                        </div>
+                        <div class="timeline-item active">
+                            <div class="date">SEP 2, 2026</div>
+                            <div class="event">Selection Notifications</div>
+                        </div>
+                        <div class="timeline-item future">
+                            <div class="date">SEP 7, 2026</div>
+                            <div class="event">Mentorship Begins</div>
+                        </div>
+                        <div class="timeline-item future">
+                            <div class="date">NOV 27, 2026</div>
+                            <div class="event">Last Day of Term</div>
+                        </div>
+                    </div>
+                    <div class="countdown" id="timeline-countdown">
+                        <p>Until: Mentorship Begins</p>
+                        <h4 id="countdown-timer">-- days -- hrs -- mins</h4>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div> <!-- End Container for Hero -->
+
+    <!-- Single Page Scrolling Main Content -->
+    <main>
+        
+        <!-- Organizations Section -->
+        <section id="projects-section" class="page-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Organizations & Projects</h2>
+                    <p>Filter and discover active Linux Foundation Mentorships.</p>
+                </div>
+                <div class="controls">
+                    <select id="term-filter">
+                        <option value="all">All Terms</option>
+                        <option value="2026-Term-3" selected>2026 Term 3 (Current)</option>
+                        <option value="2026-Term-2">2026 Term 2</option>
+                        <option value="2026-Term-1">2026 Term 1</option>
+                        <option value="2025-Term-3">2025 Term 3</option>
+                        <option value="2025-Term-2">2025 Term 2</option>
+                        <option value="2025-Term-1">2025 Term 1</option>
+                    </select>
+                    <div id="stats-container" class="stats">
+                        <!-- Dynamic stats like "Showing X projects" -->
+                    </div>
+                </div>
+
+                <div id="projects-grid" class="grid">
+                    <!-- Project cards will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="page-section bg-light">
+            <div class="container">
+                <div class="section-header center">
+                    <h2>How It Works</h2>
+                    <p>Your path to an open-source mentorship in 3 simple steps.</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon">🔍</div>
+                        <h3>1. Explore Projects</h3>
+                        <p>Use the directory above to find CNCF and LF projects matching your tech stack.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">🛠️</div>
+                        <h3>2. Engage & Contribute</h3>
+                        <p>Join the community Slack/Discord and tackle 'Good First Issues' to prove your skills.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">📝</div>
+                        <h3>3. Submit Proposal</h3>
+                        <p>Write a stellar Statement of Purpose, polish your resume, and apply on the LFX platform.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mentors Directory Section -->
+        <section id="mentors" class="page-section bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Mentors Directory</h2>
+                    <p>Find and connect with project maintainers and leaders.</p>
+                </div>
+                <div class="placeholder-box">
+                    <h3>🚧 Under Construction</h3>
+                    <p>This directory will list contact info for mentors so you can reach out for guidance on your proposals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributor Guide Section -->
+        <section id="guide" class="page-section">
+            <div class="container">
+                <div class="section-header center">
+                    <h2>Contributor Guide & FAQ</h2>
+                    <p>Everything you need to know about the LFX program.</p>
+                </div>
+                <div class="faq-container">
+                    <details class="faq-item">
+                        <summary>What is LFX Mentorship?</summary>
+                        <div class="faq-content">
+                            It's a platform by the Linux Foundation that connects open-source beginners with maintainers of CNCF and LF projects for paid, 3-month full-time internships.
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>How do I apply?</summary>
+                        <div class="faq-content">
+                            You apply directly on the <a href="https://mentorship.lfx.linuxfoundation.org/" target="_blank">LFX Mentorship platform</a>. You'll need to submit a Statement of Purpose (Cover Letter) and a resume.
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Are these mentorships paid?</summary>
+                        <div class="faq-content">
+                            Yes! LFX provides stipends for mentees who successfully complete their project milestones. The stipend amount depends on your country of residence.
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>When is the next term?</summary>
+                        <div class="faq-content">
+                            Check the Timeline card at the top of the page for the most current dates. The year is typically divided into Term 1 (Spring), Term 2 (Summer), and Term 3 (Fall).
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span class="logo-icon">🐧</span> 
+                <strong>LFX Mentorship Finder</strong>
+                <p>Built for the Open Source Community.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/Pranav-IIITM/LFX-org-finder" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/Pranav-IIITM/LFX-org-finder/issues" target="_blank">Report an Issue</a>
+                <a href="#">Back to Top</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
     <div id="modal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
