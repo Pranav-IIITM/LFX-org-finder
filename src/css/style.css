@@ -1315,3 +1315,93 @@ body {
         gap: 6px;
     }
 }
+
+/* Timeline Progress Bar */
+.timeline-progress-wrapper {
+    margin: 20px 0 25px 0;
+    padding: 0 5px;
+}
+.timeline-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    position: relative;
+    width: 100%;
+}
+.timeline-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    width: 0%; 
+    transition: width 0.5s ease;
+}
+.timeline-progress-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%; 
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: left 0.5s ease;
+    z-index: 10;
+}
+.timeline-progress-tooltip {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+.timeline-progress-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: var(--accent) transparent transparent transparent;
+}
+
+/* Vertical Gap Progress */
+.timeline-vertical-gap {
+    position: relative;
+    height: 50px;
+    margin: 5px 0 5px 6px; /* align with timeline track */
+    border-left: 2px dashed var(--border-dark);
+}
+.timeline-vertical-thumb {
+    position: absolute;
+    left: -7px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    transition: top 0.5s ease;
+    z-index: 10;
+}
+.timeline-vertical-tooltip {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--accent);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
