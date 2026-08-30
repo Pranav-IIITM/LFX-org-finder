@@ -1,0 +1,17 @@
+# Add 'documentation' label if any markdown files are changed
+documentation:
+  - '**/*.md'
+
+# Add 'data' label if the main data file is modified
+data:
+  - 'src/js/data.js'
+
+# Add 'ui' label if CSS or HTML is modified
+ui:
+  - 'src/css/**/*'
+  - '*.html'
+
+# Add 'javascript' label if JS logic is modified
+javascript:
+  - 'src/js/app.js'
+  - 'api/**/*.js'
