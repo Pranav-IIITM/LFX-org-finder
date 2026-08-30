@@ -6,8 +6,8 @@ documentation:
 data:
   - 'src/js/data.js'
 
-# Add 'ui' label if CSS or HTML is modified
-ui:
+# Add 'UI/UX' label if CSS or HTML is modified
+"UI/UX":
   - 'src/css/**/*'
   - '*.html'
 
