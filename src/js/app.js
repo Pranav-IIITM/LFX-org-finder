@@ -111,15 +111,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span>🍴 ${data.forks || 0}</span>
                     <span>🐛 ${data.issues || 0} open issues</span>
                 `;
-                containerNode.style.color = 'var(--success-color)';
+                containerNode.style.color = '#10b981'; // bright green
             } else {
-                containerNode.innerHTML = `<span>Stats unavailable (Local)</span>`;
-                containerNode.style.color = 'var(--error-color)';
+                containerNode.innerHTML = `<span>Stats unavailable</span>`;
+                containerNode.style.color = '#ef4444'; // bright red
             }
         } catch (e) {
             console.error("Failed to fetch GH stats", e);
-            containerNode.innerHTML = `<span>Stats unavailable (Local)</span>`;
-            containerNode.style.color = 'var(--error-color)';
+            containerNode.innerHTML = `<span>Stats unavailable</span>`;
+            containerNode.style.color = '#ef4444'; // bright red
         }
     };
 
