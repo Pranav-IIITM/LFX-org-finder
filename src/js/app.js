@@ -256,24 +256,78 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial render
     filterProjects();
 
-    // Setup Countdown Logic (targeting Sept 7, 2026)
+    // Setup Dynamic Timeline & Countdown Logic
     function updateCountdown() {
+        const now = new Date();
+        const nowTime = now.getTime();
+        
+        // Main countdown to Mentorship Begins (Sept 7)
         const targetDate = new Date("2026-09-07T00:00:00Z").getTime();
-        const now = new Date().getTime();
-        const distance = targetDate - now;
+        const distance = targetDate - nowTime;
 
         const countdownEl = document.getElementById("countdown-timer");
         if (countdownEl) {
             if (distance < 0) {
                 countdownEl.innerHTML = "PROGRAM STARTED";
-                return;
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                countdownEl.innerHTML = `${days}d ${hours}h ${mins}m`;
             }
+        }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        // Dynamic Vertical Timeline Logic
+        const timelineTrack = document.getElementById('dynamic-timeline');
+        if (!timelineTrack) return;
 
-            countdownEl.innerHTML = `${days}d ${hours}h ${mins}m`;
+        const items = Array.from(timelineTrack.querySelectorAll('.timeline-item'));
+        let activeIndex = -1;
+
+        // Reset classes
+        items.forEach(item => {
+            item.classList.remove('past', 'active', 'future');
+        });
+
+        // Find where 'now' fits in the timeline
+        for (let i = 0; i < items.length; i++) {
+            const itemDate = new Date(items[i].getAttribute('data-date') + "T00:00:00Z").getTime();
+            if (nowTime >= itemDate) {
+                items[i].classList.add('past');
+                activeIndex = i;
+            } else {
+                if (activeIndex === i - 1) items[i].classList.add('active');
+                else items[i].classList.add('future');
+            }
+        }
+
+        // Remove old gap if exists
+        const oldGap = document.getElementById('vertical-timeline-gap');
+        if (oldGap) oldGap.remove();
+
+        // Insert gap between activeIndex (past) and activeIndex + 1 (active)
+        if (activeIndex >= 0 && activeIndex < items.length - 1) {
+            const prevItem = items[activeIndex];
+            const nextItem = items[activeIndex + 1];
+            
+            const prevDate = new Date(prevItem.getAttribute('data-date') + "T00:00:00Z").getTime();
+            const nextDate = new Date(nextItem.getAttribute('data-date') + "T00:00:00Z").getTime();
+            
+            const totalDuration = nextDate - prevDate;
+            const elapsed = nowTime - prevDate;
+            let percentage = (elapsed / totalDuration) * 100;
+            if (percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
+
+            const gapHtml = `
+                <div class="timeline-vertical-gap" id="vertical-timeline-gap">
+                    <div class="timeline-vertical-thumb" style="top: ${percentage}%">
+                        <span class="timeline-vertical-tooltip">Today (Aug 30)</span>
+                    </div>
+                </div>
+            `;
+            
+            prevItem.insertAdjacentHTML('afterend', gapHtml);
         }
     }
     
