@@ -21681,19 +21681,27 @@ const LFX_PROJECTS = [
 // Contributors: Add new mentees here!
 const LFX_MENTEES = [
     {
-        name: "Pranav Rajput",
-        org: "CNCF",
+        name: "John Doe",
+        org: "Harbor",
         term: "2024-Term-1",
-        project: "KubeArmor",
-        github: "https://github.com/Pranav-IIITM",
-        linkedin: "https://www.linkedin.com/in/pranavrajput/"
+        project: "Harbor: Multi-arch container image support",
+        github: "https://github.com/johndoe",
+        linkedin: "https://linkedin.com/in/johndoe"
     },
     {
-        name: "Jane Doe",
-        org: "Linux Foundation",
+        name: "John Doe",
+        org: "Headlamp",
         term: "2023-Term-3",
-        project: "OpenSSF",
-        github: "https://github.com/janedoe",
-        linkedin: "https://linkedin.com/in/janedoe"
+        project: "Headlamp: Advanced cluster metrics dashboard",
+        github: "https://github.com/johndoe",
+        linkedin: "https://linkedin.com/in/johndoe"
+    },
+    {
+        name: "John Doe",
+        org: "Meshery",
+        term: "2023-Term-2",
+        project: "Meshery: Multi-cluster mesh management UI",
+        github: "https://github.com/johndoe",
+        linkedin: "https://linkedin.com/in/johndoe"
     }
 ];
