@@ -319,10 +319,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (percentage < 0) percentage = 0;
             if (percentage > 100) percentage = 100;
 
+            const todayFormatted = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
             const gapHtml = `
                 <div class="timeline-vertical-gap" id="vertical-timeline-gap">
                     <div class="timeline-vertical-thumb" style="top: ${percentage}%">
-                        <span class="timeline-vertical-tooltip">Today (Aug 30)</span>
+                        <span class="timeline-vertical-tooltip">Today (${todayFormatted})</span>
                     </div>
                 </div>
             `;
