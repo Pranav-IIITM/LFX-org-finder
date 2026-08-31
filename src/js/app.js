@@ -333,4 +333,30 @@ document.addEventListener('DOMContentLoaded', () => {
     
     updateCountdown();
     setInterval(updateCountdown, 60000);
+
+    // Render Past Mentees
+    function renderMentees() {
+        const container = document.getElementById('mentees-container');
+        if (!container) return;
+
+        if (typeof LFX_MENTEES === 'undefined' || LFX_MENTEES.length === 0) {
+            container.innerHTML = '<p>No mentees found. Be the first to add yourself!</p>';
+            return;
+        }
+
+        container.innerHTML = LFX_MENTEES.map(mentee => `
+            <div class="mentee-card">
+                <h4>${mentee.name}</h4>
+                <p class="mentee-org"><strong>Org:</strong> ${mentee.org}</p>
+                <p class="mentee-project"><strong>Project:</strong> ${mentee.project}</p>
+                <p class="mentee-term"><strong>Term:</strong> ${mentee.term}</p>
+                <div class="mentee-socials">
+                    <a href="${mentee.github}" target="_blank" class="social-link github">GitHub</a>
+                    ${mentee.linkedin ? `<a href="${mentee.linkedin}" target="_blank" class="social-link linkedin">LinkedIn</a>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    renderMentees();
 });

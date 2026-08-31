@@ -21676,3 +21676,24 @@ const LFX_PROJECTS = [
         "codebase": "INTERMEDIATE"
     }
 ];
+
+// Past Mentees Directory
+// Contributors: Add new mentees here!
+const LFX_MENTEES = [
+    {
+        name: "Pranav Rajput",
+        org: "CNCF",
+        term: "2024-Term-1",
+        project: "KubeArmor",
+        github: "https://github.com/Pranav-IIITM",
+        linkedin: "https://www.linkedin.com/in/pranavrajput/"
+    },
+    {
+        name: "Jane Doe",
+        org: "Linux Foundation",
+        term: "2023-Term-3",
+        project: "OpenSSF",
+        github: "https://github.com/janedoe",
+        linkedin: "https://linkedin.com/in/janedoe"
+    }
+];
