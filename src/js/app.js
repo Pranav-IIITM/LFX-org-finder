@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCountdown();
     setInterval(updateCountdown, 60000);
 
-    // Render Past Mentees
+    // Render Past Mentees Organizations on Homepage
     function renderMentees() {
         const container = document.getElementById('mentees-container');
         if (!container) return;
@@ -344,17 +344,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        container.innerHTML = LFX_MENTEES.map(mentee => `
-            <div class="mentee-card">
-                <h4>${mentee.name}</h4>
-                <p class="mentee-org"><strong>Org:</strong> ${mentee.org}</p>
-                <p class="mentee-project"><strong>Project:</strong> ${mentee.project}</p>
-                <p class="mentee-term"><strong>Term:</strong> ${mentee.term}</p>
-                <div class="mentee-socials">
-                    <a href="${mentee.github}" target="_blank" class="social-link github">GitHub</a>
-                    ${mentee.linkedin ? `<a href="${mentee.linkedin}" target="_blank" class="social-link linkedin">LinkedIn</a>` : ''}
-                </div>
-            </div>
+        // Extract unique organizations and count mentees
+        const orgMap = {};
+        LFX_MENTEES.forEach(mentee => {
+            if (!orgMap[mentee.org]) {
+                orgMap[mentee.org] = 0;
+            }
+            orgMap[mentee.org]++;
+        });
+
+        const uniqueOrgs = Object.keys(orgMap).sort();
+
+        container.innerHTML = uniqueOrgs.map(org => `
+            <a href="org-mentees.html?org=${encodeURIComponent(org)}" class="mentee-org-card">
+                <h4>${org}</h4>
+                <p>${orgMap[org]} ${orgMap[org] === 1 ? 'Mentee' : 'Mentees'} Directory &rarr;</p>
+            </a>
         `).join('');
     }
 

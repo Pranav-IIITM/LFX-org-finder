@@ -1463,3 +1463,32 @@ body {
 .social-link:hover {
     opacity: 0.9;
 }
+
+/* Past Mentees Org Card */
+.mentee-org-card {
+    display: block;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 25px 20px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.mentee-org-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+    border-color: var(--accent);
+}
+.mentee-org-card h4 {
+    margin-bottom: 8px;
+    color: var(--ink);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.mentee-org-card p {
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 600;
+}
