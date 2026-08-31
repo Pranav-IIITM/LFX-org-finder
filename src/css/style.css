@@ -1405,3 +1405,61 @@ body {
     border-radius: 4px;
     white-space: nowrap;
 }
+
+/* Past Mentees Section */
+.mentees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+.mentee-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.mentee-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+    border-color: var(--border-dark);
+}
+.mentee-card h4 {
+    margin-bottom: 12px;
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.mentee-card p {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    color: var(--ink);
+}
+.mentee-card p strong {
+    color: var(--ink-muted);
+}
+.mentee-socials {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+.social-link {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+}
+.social-link.github {
+    background: #24292e;
+    color: white;
+}
+.social-link.linkedin {
+    background: #0077b5;
+    color: white;
+}
+.social-link:hover {
+    opacity: 0.9;
+}
